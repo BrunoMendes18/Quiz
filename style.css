@@ -1,0 +1,56 @@
+#teste{
+    width: 500px;
+    height: 700px;
+    background-color: aqua;
+    display: block;
+    
+}
+
+#questionh1{
+    position: relative;
+    top: 10px;
+    left: 35%;
+}
+#categoriah1{
+    position: relative;
+    top: 10px;
+    left: 35%;
+}
+
+#resposta1{
+    width: 400px;
+    height: 30px;
+    background-color: brown;
+    position: relative;
+    top: 10px;
+    left: 35px;
+}
+#resposta2{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: 50px;
+    left: 35px;
+}
+#resposta3{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: 100px;
+    left: 35px;
+}
+#resposta4{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: 150px;
+    left: 35px;
+}
+
+#comecar{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: 200px;
+    left: 35px;
+}
