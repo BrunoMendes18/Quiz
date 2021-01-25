@@ -6,14 +6,16 @@
     position: relative;
     color: red;
     font-family: 'Potta One', cursive;
+   
 }
 #nome
 {
     height: 20px;
     position: relative;
     top: -30px;
-    left: 0%;
+    left: 30%;
     font-family: 'Potta One', cursive;
+    width: 300px;
 }
 /*h1 do titulo pergunta */
 #questionh1{
@@ -52,7 +54,6 @@
 #resposta1{
     width: 400px;
     height: 30px;
-    background-color: brown;
     position: relative;
     top: -50px;
     left: 0%;
@@ -92,7 +93,7 @@
     height: 30px;
     position: relative;
     top: 20px;
-    left: 0px;
+    left: -14%;
     font-family: 'Potta One', cursive;
 }
 
@@ -161,20 +162,28 @@ html {
 
 /*mobile*/
   @media (min-width: 200px) { 
+
+    .content{
+        width: 90%;
+    }
     #resposta1{
         color:blue;
         font-size: 12px;
+        width: 100%;
     }#resposta2{
         color:blue;
         font-size: 12px;
+        width: 100%;
     }
     #resposta3{
         color:blue;
         font-size: 12px;
+        width: 100%;
     }
     #resposta4{
         color:blue;
         font-size: 12px;
+        width: 100%;
     }
     #questionh1{
         top: -50px;
@@ -182,7 +191,8 @@ html {
     #pergunta{
        
         top: -50px;
-        font-size: 12px;
+        font-size: 11px;
+     
     }
     
     #categoriah1{
@@ -195,25 +205,107 @@ html {
         top: -50px;
         font-size: 15px;
     }
+
+    #nome{
+        left: 0%;
+        width: 100%;
+    }
+        #comecar{
+            left: 0%;
+            width: 80%;
+            top: 20%;
+        }
+
 }
 /*tablet acho ns*/
   @media (min-width: 576px) { 
-        #resposta1{
-            color:blue;
-        }
+        
+        
   }
 
-/*nao testei*/
-@media (min-width: 768px) { 
+/*ipad*/
+@media (min-width: 767px) { 
+
+    #questionh1{
+        top: -50px;
+    }
+    #pergunta{
+       
+        top: -50px;
+        font-size: 20px;
+    }
     #resposta1{
         color:blue;
     }
+    #categoriah1{
+        
+        top: -50px;
+        
+    }
+    #categoria{
+        
+        top: -50px;
+        font-size: 20px;
+    }
+
+    #nome{
+        left: 0%;
+    }
+        #comecar{
+            left: 0%;
+            width: 80%;
+            top: 20%;
+        }
 }
-/*nao testei*/
+/*ipad pro*/
 @media (min-width: 992px) { 
     #resposta1{
         color:blue;
+        font-size: 20px;
+    }#resposta2{
+        color:blue;
+        font-size: 20px;
     }
+    #resposta3{
+        color:blue;
+        font-size: 20px;
+    }
+    #resposta4{
+        color:blue;
+        font-size: 20px;
+    }
+    #questionh1{
+        top: -50px;
+    }
+    #pergunta{
+       
+        top: -50px;
+        font-size: 20px;
+    }
+    
+    #categoriah1{
+        
+        top: -50px;
+        
+    }
+    #categoria{
+        
+        top: -50px;
+        font-size: 20px;
+    }
+
+    #nome{
+        left: 0%;
+    }
+        #comecar{
+            left: 0%;
+            width: 80%;
+            top: 20%;
+        }
+
+
+
+
 }
 
 /*pc*/
