@@ -310,7 +310,10 @@ html {
 
 /*pc*/
 @media (min-width: 1200px) { 
-    #resposta1{
-        color:green;
+
+    .content{
+        width: 50%;
     }
+    
+
  }

@@ -24,6 +24,11 @@ var arrayBtnTeste = [btnResposta1,btnResposta2,btnResposta3,btnResposta4];
 //Variavel para verificar se o jogo ja começou (default false)
 var GamaHasStarted = false;
 
+var contarTempo;
+var contarTimer;
+
+var timer;
+
 //FUNCAO PARA CHAMAR JOGADOR
 function chamarJogador()
 {
@@ -86,6 +91,8 @@ function respostaUtilizador(event)
 function validarResposta(resposta)
 {
     console.log("Resposta: "+resposta);
+    clearInterval(contarTempo);
+    contarTimer=16;
 
     if(resposta==respostaAPI.results[contar].correct_answer)
     {
@@ -105,6 +112,7 @@ function validarResposta(resposta)
     }
 }
 
+
 function novaPergunta()
 {
     //Se nao houver mais perguntas
@@ -114,6 +122,8 @@ function novaPergunta()
         
         return console.log("jogo acabou, de reset á pagina");
     }
+
+    
 
 //Voltar a por o display do 3 e 4 botao pk eles desaparecem se a pergunta é de verdadeiro e falso
     btnResposta3.style.display ="inline";
@@ -169,6 +179,22 @@ function novaPergunta()
 
     //O jogo começou
     GamaHasStarted = true;
+
+    
+    contarTimer =16;
+    contarTempo=setInterval(()=>{
+        console.log("do some1");
+        contarTimer--;
+        timer.innerHTML="Tempo restante: "+contarTimer;
+        if(contarTimer==0)
+        {
+            console.log("time is over");
+            contar++;
+            clearInterval(contarTempo);
+            novaPergunta();
+            
+        }
+    },1000);
    
 }
 
@@ -185,13 +211,21 @@ function jogoAcabou()
 
 //Funcao que muda de formulario (do form de nome do jogador para as perguntas)
 function MudarForm() {
+      timer = document.getElementById("timer");
     var x = document.getElementById("jogador")
     var y = document.getElementById("form")
+    
+    
     if (x.style.display === "none") {
       x.style.display = "block"
+     
     } else {
       x.style.display = "none"
       y.style.display = "block"
+      console.log("here");
+  
+      timer.display = "block";
+      timer.innerHTML="Tempo restante: 15";
     }
   }
 
