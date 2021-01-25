@@ -89,12 +89,12 @@ function novaPergunta()
         return console.log("jogo acabou, de reset á pagina");
     }
 
-    btnResposta3.style.display ="block";
-    btnResposta4.style.display ="block";
+    btnResposta3.style.display ="inline";
+    btnResposta4.style.display ="inline";
     h1Pergunta.innerHTML = respostaAPI.results[contar].question;
     h1Categoria.innerHTML = respostaAPI.results[contar].category;
 
-    if(respostaAPI.results[contar].incorrect_answers[contar]=="False" || respostaAPI.results[contar].incorrect_answers[0]=="True")
+    if(respostaAPI.results[contar].incorrect_answers[0]=="False" || respostaAPI.results[contar].incorrect_answers[0]=="True")
     {
         console.log("pergunta com resposta Verdadeiro ou Falso");
         btnResposta3.style.display ="none";
