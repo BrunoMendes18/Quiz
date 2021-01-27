@@ -29,6 +29,13 @@ var contarTimer;
 
 var timer;
 
+var btn5050 = document.getElementById("btn5050");
+
+var CanUse = false;
+var HasUsed = false;
+
+
+
 //FUNCAO PARA CHAMAR JOGADOR
 function chamarJogador()
 {
@@ -47,6 +54,9 @@ function chamarJogador()
 
 function chamarAPI()
 {
+    let bgMusic= document.createElement("audio");
+    bgMusic.src ="bmusic.mp3";
+    bgMusic.autoplay= true;
     chamarJogador()
 
     fetch("https://opentdb.com/api.php?amount=10")
@@ -102,12 +112,18 @@ function validarResposta(resposta)
         //Conta as respostas certas
         respostascertas++
         certas.innerText="Pontuação: " + respostascertas 
+        let correctSound= document.createElement("audio");
+        correctSound.src ="correct.mp3";
+        correctSound.autoplay= true;
         novaPergunta();
     }
     else 
     {
         contar++;
         console.log("errou");
+        let incorrectSound= document.createElement("audio");
+        incorrectSound.src ="incorrect.mp3";
+        incorrectSound.autoplay= true;
         novaPergunta();
     }
 }
@@ -126,8 +142,17 @@ function novaPergunta()
     
 
 //Voltar a por o display do 3 e 4 botao pk eles desaparecem se a pergunta é de verdadeiro e falso
-    btnResposta3.style.display ="inline";
-    btnResposta4.style.display ="inline";
+
+    for(var i=0;i<4;i++)
+    {
+        if(arrayBtnTeste[i].style.display=="none")
+        {
+            console.log("some were hidden");
+            arrayBtnTeste[i].style.display="inline";
+        }
+    }
+    //btnResposta3.style.display ="inline";
+    //btnResposta4.style.display ="inline";
 
     //Atribuir a pergunta ao h1 especifico
     h1Pergunta.innerHTML = respostaAPI.results[contar].question;
@@ -139,6 +164,7 @@ function novaPergunta()
     if(respostaAPI.results[contar].incorrect_answers[0]=="False" || respostaAPI.results[contar].incorrect_answers[0]=="True")
     {
         console.log("pergunta com resposta Verdadeiro ou Falso");
+        CanUse = false;
         //Desaparece o 3 e 4 butao
         btnResposta3.style.display ="none";
         btnResposta4.style.display ="none";
@@ -149,7 +175,7 @@ function novaPergunta()
     }
     else 
     {
-
+        CanUse = true;
         //Faz o mesmo do de cima mas como tem mais respostas fiz um for
         for(var i =0;i<respostaAPI.results[contar].incorrect_answers.length;i++)
     {
@@ -162,7 +188,7 @@ function novaPergunta()
 
     }
 
-    
+    arrayTeste = arrayTodasRespostas;
     
     //Isto faz o shuffle das respostas
     for(var i=0;i<arrayBtnTeste.length;i++)
@@ -197,6 +223,49 @@ function novaPergunta()
     },1000);
    
 }
+
+btn5050.addEventListener("click",()=>{
+
+
+    console.log("50/50 clicked");
+    if(HasUsed==true)
+    return console.log("already used");
+
+
+
+    if(CanUse==true)
+    {
+        console.log("canUse");
+        let  arrayTeste2 = arrayBtnTeste;
+        let position;
+        for(var i=0;i<arrayBtnTeste.length;i++)
+        {
+            if(arrayTeste2[i].innerHTML==respostaAPI.results[contar].correct_answer)
+            {
+                position=i;
+            
+            }
+            
+            
+        }       
+        arrayTeste2.splice(position,1);                     
+        let numero = Math.floor(Math.random() * arrayTeste2.length);
+        arrayTeste2.splice(numero,1);
+         arrayTeste2[0].style.display="none";
+         arrayTeste2[1].style.display="none";    
+        
+        HasUsed=true;
+        btn5050.style.display="none";
+        arrayBtnTeste = [btnResposta1,btnResposta2,btnResposta3,btnResposta4];
+    }else
+    {
+        return console.log("cant use");
+    }
+
+
+});
+
+
 
 //Funcao quando o as perguntas acabam
 function jogoAcabou()
