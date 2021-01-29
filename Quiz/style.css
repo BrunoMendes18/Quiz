@@ -158,6 +158,49 @@ html {
 /*fim do backgroud animado*/
 
 
+#title{
+    color: red;
+}
+
+#bestTable{
+    position: relative;
+    left: 40%;
+}
+
+#tabela{
+    position: relative;
+    left: 40%;
+}
+
+#novaPergunta,#leaderboard,#resposta1,#resposta2,#resposta3,#resposta4,#btn5050{
+    box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	background-color:#44c767;
+	border-radius:6px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffe8ff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#novaPergunta,#leaderboard,#resposta1,#resposta2,#resposta3,#resposta4,#btn5050:hover {
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	background-color:#5cbf2a;
+}
+
+
+
+
+
+
+
+
+
 /*media queries*/
 
 /*mobile*/
@@ -216,6 +259,17 @@ html {
             top: 20%;
         }
 
+        #bestTable{
+            position: relative;
+            left: 30%;
+        }
+        
+        #tabela{
+            position: relative;
+            left: 30%;
+        }
+        
+
 }
 /*tablet acho ns*/
   @media (min-width: 576px) { 
@@ -256,6 +310,31 @@ html {
             width: 80%;
             top: 20%;
         }
+
+
+        h1{
+            font-size: 50px;
+        }
+        h4{
+            font-size: 25px;
+        }
+    tr{
+        font-size: 30px;
+    }
+td{
+    width: 200px;
+    font-size: 30px;
+}
+
+#bestTable{
+    position: relative;
+    left: 15%;
+}
+
+#tabela{
+    position: relative;
+    left: 15%;
+}
 }
 /*ipad pro*/
 @media (min-width: 992px) { 
@@ -303,7 +382,29 @@ html {
             top: 20%;
         }
 
+        h1{
+            font-size: 50px;
+        }
+        h4{
+            font-size: 40px;
+        }
+    tr{
+        font-size: 30px;
+    }
+td{
+    width: 200px;
+    font-size: 30px;
+}
 
+#bestTable{
+    position: relative;
+    left: 20%;
+}
+
+#tabela{
+    position: relative;
+    left: 20%;
+}
 
 
 }
@@ -314,6 +415,23 @@ html {
     .content{
         width: 50%;
     }
+    h1{
+        font-size: 50px;
+    }
+    h4{
+        font-size: 30px;
+    }
     
 
  }
+
+
+
+
+
+
+
+
+
+
+

@@ -57,6 +57,7 @@ function chamarAPI()
     let bgMusic= document.createElement("audio");
     bgMusic.src ="bmusic.mp3";
     bgMusic.autoplay= true;
+    bgMusic.volume = 0.2;
     chamarJogador()
 
     fetch("https://opentdb.com/api.php?amount=10")
@@ -115,6 +116,7 @@ function validarResposta(resposta)
         let correctSound= document.createElement("audio");
         correctSound.src ="correct.mp3";
         correctSound.autoplay= true;
+        correctSound.volume = 0.5;
         novaPergunta();
     }
     else 
@@ -124,6 +126,7 @@ function validarResposta(resposta)
         let incorrectSound= document.createElement("audio");
         incorrectSound.src ="incorrect.mp3";
         incorrectSound.autoplay= true;
+        incorrectSound.volume = 0.5;
         novaPergunta();
     }
 }
@@ -265,7 +268,8 @@ btn5050.addEventListener("click",()=>{
 
 });
 
-
+var player;
+var nomePlayer;
 
 //Funcao quando o as perguntas acabam
 function jogoAcabou()
@@ -276,14 +280,18 @@ function jogoAcabou()
     MudarFim()
 
     resul.innerText="O jogador " + nome.value + " acertou " + respostascertas + " respostas"
+    player = new Player(nomePlayer,respostascertas*10);
+    gravar(player);
 }
 
 //Funcao que muda de formulario (do form de nome do jogador para as perguntas)
 function MudarForm() {
       timer = document.getElementById("timer");
-    var x = document.getElementById("jogador")
-    var y = document.getElementById("form")
-    
+    var x = document.getElementById("jogador");
+    var y = document.getElementById("form");
+    var txt = document.getElementById("nome");
+    nomePlayer= txt.value;
+    console.log("Nome player: "+nomePlayer);
     
     if (x.style.display === "none") {
       x.style.display = "block"
@@ -311,3 +319,181 @@ function MudarForm() {
 
     
   }
+
+  function Player(nome,pontos){
+    this.nome = nome;
+    this.pontos = pontos;
+    this.natureza ="Player";
+}
+
+function gravar(player){
+    var playerASerLido = (JSON.parse(localStorage.getItem(player.nome)));
+    if(playerASerLido)
+    {
+        if(player.pontos>playerASerLido.pontos)
+        {
+            localStorage.setItem(player.nome, JSON.stringify(player))
+        }else 
+        return;
+            
+    }
+    else 
+    {
+        localStorage.setItem(player.nome, JSON.stringify(player))
+    }
+    
+
+    //Escrever um metodo para so gravar a melhor pontuação
+}
+
+var btnLeaderBoard = document.getElementById("leaderboard");
+btnLeaderBoard.addEventListener("click",leitura);
+
+function leitura(){
+
+    var endForm = document.getElementById("fim");
+    endForm.style.display = "none";
+
+    var leaderboardDiv = document.getElementById("showLeaderBoard");
+    leaderboardDiv.style.display = "block";
+
+
+
+
+    Object.keys(localStorage).forEach(function(key,index) {
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object 
+        console.log(key);
+        var playerASerLido = (JSON.parse(localStorage.getItem(key)));
+
+        var maiorScore = document.getElementById("bestP");
+        var nome = document.getElementById("bestN");
+
+        var scoreM = Number(maiorScore.innerHTML);
+        console.log(scoreM);
+        console.log(nome.innerHTML);
+
+        if(playerASerLido.natureza == "Player"){
+
+            console.log(playerASerLido);
+
+            if(playerASerLido.nome=="")
+            {
+                localStorage.removeItem("");
+            }
+
+            if(playerASerLido.pontos>scoreM)
+            {
+                nome.innerHTML = playerASerLido.nome;
+                maiorScore.innerHTML = playerASerLido.pontos;
+            }else 
+            {
+                var table = document.getElementById("tabela");
+
+                var newP = document.createElement("tr");
+                
+                var newNome = document.createElement("td");
+                var newPontos = document.createElement("td");
+    
+                newNome.innerHTML = playerASerLido.nome;
+                newPontos.innerHTML = playerASerLido.pontos;
+    
+                table.append(newP,newNome,newPontos);
+            }
+          
+
+           
+        }
+
+
+    });
+    
+}
+
+var respostaAPI2;
+var btnNovaPergunta = document.getElementById("novaPergunta");
+btnNovaPergunta.addEventListener("click",()=>{
+
+   
+    fetch("https://opentdb.com/api.php?amount=1")
+    .then((response)=>{ return response.text()})
+    .then((r) => {respostaAPI2 =JSON.parse(r); console.log(respostaAPI2); mudarPergunta()})
+
+    btnNovaPergunta.style.display="none";
+    
+
+})
+
+
+function mudarPergunta()
+{
+//Atribuir a pergunta ao h1 especifico
+h1Pergunta.innerHTML = respostaAPI2.results[0].question;
+//Atribuir a categoria ao h1 especifico
+h1Categoria.innerHTML = respostaAPI2.results[0].category;
+
+
+//Se a pergunta for de verdadeiro e falso
+if(respostaAPI2.results[0].incorrect_answers[0]=="False" || respostaAPI2.results[0].incorrect_answers[0]=="True")
+{
+    console.log("pergunta com resposta Verdadeiro ou Falso");
+    CanUse = false;
+    //Desaparece o 3 e 4 butao
+    btnResposta3.style.display ="none";
+    btnResposta4.style.display ="none";
+
+    //Adiciona ao array com Todas as respostas para aquela pergunta(as incorretas+corretas)
+    arrayTodasRespostas.push(respostaAPI2.results[0].incorrect_answers);
+    arrayTodasRespostas.push(respostaAPI2.results[0].correct_answer);
+}
+else 
+{
+    CanUse = true;
+    //Faz o mesmo do de cima mas como tem mais respostas fiz um for
+    for(var i =0;i<respostaAPI2.results[0].incorrect_answers.length;i++)
+{
+    arrayTodasRespostas.push(respostaAPI2.results[0].incorrect_answers[i])
+}
+
+arrayTodasRespostas.push(respostaAPI2.results[0].correct_answer);
+
+console.log(arrayTodasRespostas);
+
+}
+
+arrayTeste = arrayTodasRespostas;
+
+//Isto faz o shuffle das respostas
+for(var i=0;i<arrayBtnTeste.length;i++)
+{
+    //Random numero entre 0 e array.length(no inicio vai de 0-4 mas vai diminuir pk eu removo do array)
+    let numero = Math.floor(Math.random() * arrayTodasRespostas.length);
+
+    //O butao i (neste momento o 1(na posicao 0 fica o primeiro butao eu declarei em cima de todo)) fica com a pergunta duma posicao random do array de respostas
+    arrayBtnTeste[i].innerHTML = arrayTodasRespostas[numero];
+
+    //Remove a resposta do array
+    arrayTodasRespostas.splice(numero,1);
+}
+
+//O jogo começou
+GamaHasStarted = true;
+
+
+/*contarTimer =16;
+contarTempo=setInterval(()=>{
+    console.log("do some1");
+    contarTimer--;
+    timer.innerHTML="Tempo restante: "+contarTimer;
+    if(contarTimer==0)
+    {
+        console.log("time is over");
+        contar++;
+        clearInterval(contarTempo);
+        novaPergunta();
+        
+    }
+},1000);*/
+
+
+}
