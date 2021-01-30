@@ -34,11 +34,28 @@ var btn5050 = document.getElementById("btn5050");
 var CanUse = false;
 var HasUsed = false;
 
+function chamarAPI()
+{
+    //Background Music
+    let bgMusic= document.createElement("audio");
+    bgMusic.src ="bmusic.mp3";
+    bgMusic.autoplay= true;
+    bgMusic.volume = 0.2;
 
+
+    chamarJogador()
+
+    fetch("https://opentdb.com/api.php?amount=10")
+    .then((response)=>{ return response.text()})
+    .then((r) => {respostaAPI =JSON.parse(r); console.log(respostaAPI);novaPergunta()})
+
+    //Fez o pedido e no fim invocou a funçao novaPergunta;
+}
 
 //FUNCAO PARA CHAMAR JOGADOR
 function chamarJogador()
 {
+    //input em html
     var nome=document.getElementById("nome").value
 
     if(nome=="")
@@ -52,20 +69,7 @@ function chamarJogador()
     
 }
 
-function chamarAPI()
-{
-    let bgMusic= document.createElement("audio");
-    bgMusic.src ="bmusic.mp3";
-    bgMusic.autoplay= true;
-    bgMusic.volume = 0.2;
-    chamarJogador()
 
-    fetch("https://opentdb.com/api.php?amount=10")
-    .then((response)=>{ return response.text()})
-    .then((r) => {respostaAPI =JSON.parse(r); console.log(respostaAPI);novaPergunta()})
-
-    //Fez o pedido e no fim invocou a funçao novaPergunta;
-}
 
 
 btnResposta1.addEventListener("click", respostaUtilizador);
@@ -102,31 +106,43 @@ function respostaUtilizador(event)
 function validarResposta(resposta)
 {
     console.log("Resposta: "+resposta);
+    //Resetar o Timer
     clearInterval(contarTempo);
     contarTimer=16;
 
+    //Se a resposta for a correta
     if(resposta==respostaAPI.results[contar].correct_answer)
     {
         //Aqui que vai-se adicionar os pontos
         console.log("acertou");
+        //Pedi 10 perguntas passa para a proxima
         contar++;
         //Conta as respostas certas
         respostascertas++
         certas.innerText="Pontuação: " + respostascertas 
+
+        //Som de acertou
         let correctSound= document.createElement("audio");
         correctSound.src ="correct.mp3";
         correctSound.autoplay= true;
         correctSound.volume = 0.5;
+
         novaPergunta();
     }
     else 
     {
+          //Pedi 10 perguntas passa para a proxima
         contar++;
+
         console.log("errou");
+
+        //Som de errou
         let incorrectSound= document.createElement("audio");
         incorrectSound.src ="incorrect.mp3";
         incorrectSound.autoplay= true;
         incorrectSound.volume = 0.5;
+
+
         novaPergunta();
     }
 }
@@ -154,8 +170,6 @@ function novaPergunta()
             arrayBtnTeste[i].style.display="inline";
         }
     }
-    //btnResposta3.style.display ="inline";
-    //btnResposta4.style.display ="inline";
 
     //Atribuir a pergunta ao h1 especifico
     h1Pergunta.innerHTML = respostaAPI.results[contar].question;
@@ -181,16 +195,15 @@ function novaPergunta()
         CanUse = true;
         //Faz o mesmo do de cima mas como tem mais respostas fiz um for
         for(var i =0;i<respostaAPI.results[contar].incorrect_answers.length;i++)
-    {
+        {
         arrayTodasRespostas.push(respostaAPI.results[contar].incorrect_answers[i])
-    }
+        }
 
     arrayTodasRespostas.push(respostaAPI.results[contar].correct_answer);
 
     console.log(arrayTodasRespostas);
 
     }
-
     arrayTeste = arrayTodasRespostas;
     
     //Isto faz o shuffle das respostas
@@ -231,6 +244,7 @@ btn5050.addEventListener("click",()=>{
 
 
     console.log("50/50 clicked");
+    //Se ja clickou no botao antes agr é inutil pk eu pus o botao invisivel
     if(HasUsed==true)
     return console.log("already used");
 
@@ -243,6 +257,7 @@ btn5050.addEventListener("click",()=>{
         let position;
         for(var i=0;i<arrayBtnTeste.length;i++)
         {
+            //Saber em que botao esta a resposta correta
             if(arrayTeste2[i].innerHTML==respostaAPI.results[contar].correct_answer)
             {
                 position=i;
@@ -250,15 +265,22 @@ btn5050.addEventListener("click",()=>{
             }
             
             
-        }       
+        }   
+        //Retirar do array de botoes o botao com a resposta correta    
         arrayTeste2.splice(position,1);                     
         let numero = Math.floor(Math.random() * arrayTeste2.length);
+        //Retirar do array uma resposta errada aleatoria
+
         arrayTeste2.splice(numero,1);
+
+        //As 2 erradas que ficaram no array desaparecem
          arrayTeste2[0].style.display="none";
          arrayTeste2[1].style.display="none";    
         
         HasUsed=true;
         btn5050.style.display="none";
+
+        //Isto tinha dado um bug entao voltei a adicionar td ao array "original"
         arrayBtnTeste = [btnResposta1,btnResposta2,btnResposta3,btnResposta4];
     }else
     {
@@ -359,7 +381,7 @@ function leitura(){
 
 
 
-
+    var newArray = [];
     Object.keys(localStorage).forEach(function(key,index) {
         // key: the name of the object key
         // index: the ordinal position of the key within the object 
@@ -388,24 +410,29 @@ function leitura(){
                 maiorScore.innerHTML = playerASerLido.pontos;
             }else 
             {
-                var table = document.getElementById("tabela");
-
-                var newP = document.createElement("tr");
-                
-                var newNome = document.createElement("td");
-                var newPontos = document.createElement("td");
-    
-                newNome.innerHTML = playerASerLido.nome;
-                newPontos.innerHTML = playerASerLido.pontos;
-    
-                table.append(newP,newNome,newPontos);
+                newArray.push(playerASerLido);
             }
           
 
            
         }
+       
 
+    });
 
+    newArray = newArray.sort((a,b)=> b.pontos-a.pontos);
+    newArray.forEach(element => {
+        var table = document.getElementById("tabela");
+
+        var newP = document.createElement("tr");
+        
+        var newNome = document.createElement("td");
+        var newPontos = document.createElement("td");
+
+        newNome.innerHTML = element.nome;
+        newPontos.innerHTML = element.pontos;
+
+        table.append(newP,newNome,newPontos);
     });
     
 }
