@@ -1,0 +1,211 @@
+/*Fonte usada , poe mais se tu quiseres*/
+@import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap');
+
+
+/*h1 do titulo pergunta */
+#questionh1{
+    position: relative;
+    top: -90px;
+    left: 0%;
+    color: red;
+    font-family: 'Potta One', cursive;
+    
+}
+
+/*h1 que recebe a pergunta*/
+#pergunta{
+    position: relative;
+    top: -80px;
+    left: 0%;
+    font-family: 'Potta One', cursive;
+}
+/*h1 titula da categoria */
+#categoriah1{
+    position: relative;
+    top: -70px;
+    left: 0%;
+    color: red;
+    font-family: 'Potta One', cursive;
+}
+/*h1 que recebe a categoria*/
+#categoria{
+    position: relative;
+    top: -60px;
+    left: 0%;
+    font-family: 'Potta One', cursive;
+}
+
+
+#resposta1{
+    width: 400px;
+    height: 30px;
+    background-color: brown;
+    position: relative;
+    top: -50px;
+    left: 0%;
+    display: inline;
+    font-family: 'Potta One', cursive;
+}
+#resposta2{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: -40px;
+    left: 0%;
+    display: inline;
+    font-family: 'Potta One', cursive;
+}
+#resposta3{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: -30px;
+    left: 0%;
+    display: inline;
+    font-family: 'Potta One', cursive;
+}
+#resposta4{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: -20px;
+    left: 0%;
+    display: inline;
+    font-family: 'Potta One', cursive;
+}
+
+#comecar{
+    width: 400px;
+    height: 30px;
+    position: relative;
+    top: 20px;
+    left: 0px;
+    font-family: 'Potta One', cursive;
+}
+
+/*isto é do backgroud animado*/
+html {
+    height:100%;
+  }
+  
+  body {
+    margin:0;
+  }
+  
+  .bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+  }
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+  }
+  
+  .bg3 {
+    animation-duration:5s;
+  }
+  
+  .content {
+    background-color:rgba(255,255,255,.8);
+    border-radius:.25em;
+    box-shadow:0 0 .25em rgba(0,0,0,.25);
+    box-sizing:border-box;
+    left:50%;
+    padding:10vmin;
+    position:fixed;
+    text-align:center;
+    top:50%;
+    transform:translate(-50%, -50%);
+  }
+  
+  h1 {
+    font-family:monospace;
+  }
+
+
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  }
+
+/*fim do backgroud animado*/
+
+
+/*media queries*/
+
+/*mobile*/
+  @media (min-width: 200px) { 
+    #resposta1{
+        color:blue;
+        font-size: 12px;
+    }#resposta2{
+        color:blue;
+        font-size: 12px;
+    }
+    #resposta3{
+        color:blue;
+        font-size: 12px;
+    }
+    #resposta4{
+        color:blue;
+        font-size: 12px;
+    }
+    #questionh1{
+        top: -50px;
+    }
+    #pergunta{
+       
+        top: -50px;
+        font-size: 12px;
+    }
+    
+    #categoriah1{
+        
+        top: -50px;
+        
+    }
+    #categoria{
+        
+        top: -50px;
+        font-size: 15px;
+    }
+}
+/*tablet acho ns*/
+  @media (min-width: 576px) { 
+        #resposta1{
+            color:blue;
+        }
+  }
+
+/*nao testei*/
+@media (min-width: 768px) { 
+    #resposta1{
+        color:blue;
+    }
+}
+/*nao testei*/
+@media (min-width: 992px) { 
+    #resposta1{
+        color:blue;
+    }
+}
+
+/*pc*/
+@media (min-width: 1200px) { 
+    #resposta1{
+        color:green;
+    }
+ }
